@@ -1,0 +1,130 @@
+<!-- head para PC -->
+{% extends "home/base_home.html" %}
+{% load static %}
+
+{% block title %}
+{{home.title}}
+{% endblock title %}
+
+{% block description %}
+<meta name="description" content="{{home.description}}">    
+{% endblock description %}
+    
+
+
+{% block content %}
+
+{% include "includes/header.html" %}
+
+<div class="grid-container">
+    <!-- primer bloque del home -->
+
+    <div class="grid-x grid-margin-x" style="margin-top: 1em;">
+        <!-- bloque de blog principal -->
+        {% if portada %}
+        <div class="cell small-12 large-6">
+            <div class="card" style="width: 100%;">
+                <img src="{{portada.image.url}}">
+                <div class="card-section">
+                    <h4><a href="{% url 'entrada_app:entry-detail' portada.slug %}">{{portada.title}}</a></h4>
+                    <p>{{portada.resume | truncatechars:120}}</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>Sin contenido</p>
+        {% endif %}
+        <!-- FIN bloque de blog principal -->
+
+        <!-- bloque de blog principal -->
+        <div class="cell small-12 large-6 grid-x grid-margin-x">
+
+            {% if entradas_home %}
+            {% for x in entradas_home %}
+            <div class="cell small-12 large-6">
+                <div class="card" style="width: 100%;">
+                    <img style="height: 150px;" src="{{x.image.url}}">
+                    <div class="card-section">
+                        <h5><a href="{% url 'entrada_app:entry-detail' x.slug %}">{{x.title | truncatechars:40}}</a></h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No hay contenido para mostrar</p>
+            {% endif %}
+
+
+        </div>
+        <!-- FIN bloque de blog principal -->
+    </div>
+    <!-- FIN del primer bloque home -->
+
+    <!-- segundo bloque pantalla home -->
+    <div class="grid-x align-center" style="margin-top: 1em;">
+        <div class="cell small-12 large-10 callout secondary">
+            
+            {% if home %}
+            <h5>{{home.about_title}}</h5>
+            <p>
+                {{home.title}}
+            </p>
+            {% else %}
+            <h5>Sobre mi</h5>
+            <p>
+                Descripción sobre mi
+            </p>
+            {% endif %}
+                
+            
+
+            <p>
+                <button class="button" data-open="exampleModal2">Suscribirme</button>
+            </p>
+
+            <!-- This is the first modal -->
+            <div class="reveal" id="exampleModal2" data-reveal style="width: 300px;">
+                <p class="lead">Ingresa tu correo</p>
+                <form class="grid-x grid-margin-x" method="POST" action="{% url 'home_app:add-suscriptors' %}">{% csrf_token %}
+                    <div class="cell small-12">
+                        {{form_suscribirse.email}}
+                    </div>
+                    <div class="cell small-12">
+                        <button type="submit" class="success button">Suscribirme</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- FIN segundo bloque pantalla home -->
+
+
+    <!-- tercer bloque home -->
+    <div class="grid-x grid-margin-x align-center">
+        <h3 class="cell">Articulos Recientes:</h3>
+
+        {% if entradas_recientes %}
+
+        {% for x in entradas_recientes %}
+        <div class="cell small-6 large-4">
+            <div class="card" style="width: 100%;">
+                <img style="height: 150px;" src="{{x.image.url}}">
+                <div class="card-section">
+                    <h4><a href="{% url 'entrada_app:entry-detail' x.slug %}">{{x.title | truncatechars:40}}</a></h4>
+                    <p>{{x.resume | truncatechars:70}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No hay articulos recientes</p>
+
+        {% endif %}
+
+    </div>
+    <!-- FIN tercer bloque -->
+</div>
+{% include "includes/footer.html" %}
+
+{% endblock content %}

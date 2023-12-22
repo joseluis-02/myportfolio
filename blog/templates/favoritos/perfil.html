@@ -1,0 +1,53 @@
+<!-- head para PC -->
+{% extends "favoritos/base_favoritos.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "includes/header.html" %}
+
+<div class="grid-container">
+    <div class="grid-x grid-margin-x align-center" style="margin-top: 1em;">
+        <!-- bloque de datos de usuario -->
+        <div class="cell small-12 large-4">
+            <div class="callout">
+                <h5>Cristhian Santa Cruz</h5>
+                <p>neunapp.servicios@gmail.com - Programador - 20-18-1991</p>
+                <a href="#">editar perfil</a> |
+                <a href="{% url 'users_app:user-logout' %}">cerrar sesión</a>
+            </div>
+        </div>
+        <!-- FIN bloque de datos de usuario -->
+
+
+        <!-- bloque de articulos favoritos de usuario -->
+        <div class="cell large-8 grid-x grid-margin-x align-center">
+            {% if entradas_user %}
+            {% for x in entradas_user %}
+            <div class="cell small-12">
+                <div class="card-favoritos">
+                    <img class="card-favoritos-img" src="{{x.entry.image.url}}">
+                    <div class="card-favoritos-body">
+                        <h3 class="card-favoritos-body-titulo">{{x.entry.title}}</h3>
+                        <p class="card-favoritos-body-text">{{x.entry.resume | truncatechars:150}}</p>
+                        <form class="card-favoritos-body-actions" method="POST" action="{% url 'favoritos_app:delete-favorito' x.id %}">{% csrf_token %}
+                            <a class="button warning" href="{% url 'entrada_app:entry-detail' x.entry.slug %}">Ver completo</a>
+                            <button type="submit" class="button alert">Quitar de favoritos</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No tienes articulos favoritos agregados.</p>
+            {% endif %}
+
+
+
+        </div>
+        <!-- FIN bloque de articulos favoritos de usuario -->
+    </div>
+</div>
+{% include "includes/footer.html" %}
+
+{% endblock content %}

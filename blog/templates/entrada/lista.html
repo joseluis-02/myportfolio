@@ -1,0 +1,99 @@
+<!-- head para PC -->
+{% extends "entrada/base_entrada.html" %}
+{% load static %}
+
+{% block title %}
+    Lista de articulos proyectos y cursos
+{% endblock title %}
+
+
+{% block content %}
+
+{% include "includes/header.html" %}
+
+<div class="grid-container">
+    <div class="grid-x grid-margin-x" style="margin-top: 1em;">
+        <!-- primer bloque pantalla blog -->
+        <div class="cell small-12 large-8">
+
+            <!-- bloque de buscador -->
+            <form class="input-group" method="GET"> {% csrf_token %}
+                <input class="input-group-field" id="kword" name="kword" type="text" placeholder="Buscar ...">
+                <div class="input-group-button">
+                    <input type="submit" class="button" value="Buscar">
+                </div>
+            </form>
+            <!-- FIN bloque de formulario -->
+
+            <!-- inicio bloque de resultados de busqueda -->
+            <div class="grid-x grid-margin-x">
+
+                {% for x in entradas %}
+                <div class="cell small-6 large-4">
+                    <div class="card" style="width: 100%;">
+                        <img style="height: 150px;" src="{{x.image.url}}">
+                        <div class="card-section">
+                            <h4><a href="{% url 'entrada_app:entry-detail' x.slug %}">{{x.title | truncatechars:40}}</a></h4>
+                            <p>{{x.resume | truncatechars:100}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: red; text-align: center;">No se encontraron resultados</p>
+                {% endfor %}
+
+            </div>
+            <!-- FIN bloque de resultados de busqueda -->
+
+        </div>
+        <!-- FIN primer bloque pantalla blog -->
+
+
+        <!-- inicio del segundo bloque - categorias -->
+        <div class="cell small-12 large-4" style="height: 500px;">
+            <h4>Categorias</h4>
+            <ul class="vertical menu">
+
+                {% if categorias %}
+
+                {% for x in categorias %}
+                <li><a href="?categoria={{x.short_name}}">{{x.short_name}}</a></li>
+                {% endfor %}
+
+                {% else %}
+                <li>No hay categorias</li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- FIN inicio del segundo bloque - categorias -->
+
+    </div>
+
+    <!-- inicio de bloque de paginacion -->
+    <div class="pagination">
+        <ul class="pagination-list">
+            {% if page_obj.has_previous %}
+            <li><a href="?page=1" class="pagination-link">&laquo; Primer</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">&laquo; Anterior</a></li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li><span class="current pagination-link">{{ num }}</span></li>
+            {% else %}
+            <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}" class="pagination-link">Siguiente &raquo;</a></li>
+            <li><a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link">Último &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- FIN bloque de paginacion -->
+</div>
+{% include "includes/footer.html" %}
+
+{% endblock content %}
