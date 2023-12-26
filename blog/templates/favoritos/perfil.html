@@ -11,9 +11,10 @@
         <!-- bloque de datos de usuario -->
         <div class="cell small-12 large-4">
             <div class="callout">
-                <h5>Cristhian Santa Cruz</h5>
-                <p>neunapp.servicios@gmail.com - Programador - 20-18-1991</p>
-                <a href="#">editar perfil</a> |
+                <h5>{{user.full_name}}</h5>
+                <p>{{user.email}}</p>
+                <p>{{user.ocupation}}</p>
+                <!--<a href="#">editar perfil</a>-->
                 <a href="{% url 'users_app:user-logout' %}">cerrar sesión</a>
             </div>
         </div>
