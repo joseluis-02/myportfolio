@@ -1,10 +1,14 @@
 # git ignore
 blog/secret.json
-#
+# Migraciones de modelos
 blog/applications/users/migrations/*
 blog/applications/entrada/migrations/*
 blog/applications/favoritos/migrations/*
 blog/applications/home/migrations/*
-# todo archivo de cahe
-*.pyc
-__pycahe__/
+# Archivos de cache
+blog/blog/__pycache__/*
+blog/applications/__pycache__/*
+blog/applications/entrada/__pycache__/*
+blog/applications/favoritos/__pycache__/*
+blog/applications/home/__pycache__/*
+blog/applications/users/__pycache__/*
