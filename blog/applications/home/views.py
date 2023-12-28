@@ -20,9 +20,20 @@ class HomePageView(TemplateView):
     template_name = "home/index.html"
     #Funciones
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        try:
+            objeto_home = Home.objects.latest('created')
+        except Home.DoesNotExist:
+            objeto_home = Home.objects.create(
+                title = 'Mi titulo',
+                description = 'Mi descripcion',
+                about_title = 'Acerca de nosotros',
+                contact_email = 'prueba@gmail.com',
+                phone = '0000000'
+            )
+
         contex = super(HomePageView,self).get_context_data(**kwargs)
         #Cargamos los datos al home
-        contex['home'] = Home.objects.latest('created')
+        contex['home'] = objeto_home
         #contexto para la portada
         contex['portada'] = Entry.objects.entrada_en_portada()
         #contexto para los artículos en home
