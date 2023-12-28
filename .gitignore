@@ -1,15 +1,7 @@
 # git ignore
 blog/secret.json
-# Migraciones de modelos
-blog/applications/users/migrations/*
-blog/applications/entrada/migrations/*
-blog/applications/favoritos/migrations/*
-blog/applications/home/migrations/*
-# Archivos de cache
-blog/blog/__pycache__/*.pyc
-blog/blog/settings/__pycache__/*
-blog/applications/__pycache__/*
-blog/applications/entrada/__pycache__/*
-blog/applications/favoritos/__pycache__/*
-blog/applications/home/__pycache__/*
-blog/applications/users/__pycache__/*
+# Ignorar la carpeta __pycache__ en cualquier lugar dentro del proyecto
+__pycache__/
+# Ignorar la carpeta de migraciones en todas partes del proyecto
+*/migrations/
+
