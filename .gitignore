@@ -6,7 +6,7 @@ blog/applications/entrada/migrations/*
 blog/applications/favoritos/migrations/*
 blog/applications/home/migrations/*
 # Archivos de cache
-blog/blog/__pycache__/*
+blog/blog/__pycache__/*.pyc
 blog/blog/settings/__pycache__/*
 blog/applications/__pycache__/*
 blog/applications/entrada/__pycache__/*
