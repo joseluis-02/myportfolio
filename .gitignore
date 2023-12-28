@@ -5,3 +5,6 @@ blog/applications/users/migrations/*
 blog/applications/entrada/migrations/*
 blog/applications/favoritos/migrations/*
 blog/applications/home/migrations/*
+# todo archivo de cahe
+*.pyc
+__pycahe__/
