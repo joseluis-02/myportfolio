@@ -5,3 +5,4 @@ __pycache__/
 # Ignorar la carpeta de migraciones en todas partes del proyecto
 */migrations/
 
+blog/media/*
